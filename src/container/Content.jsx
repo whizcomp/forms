@@ -1,107 +1,198 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { postDetails, postDetailsDiaspora } from "./Server";
 export default function Content() {
+  const [done, setDone] = useState(false);
+  const [state, setState] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    comments: "",
+    banking: "",
+    amount: "",
+    payment: "",
+    agent: 0,
+  });
+  const onUpdateField = (e) => {
+    const nextFormState = {
+      ...state,
+      [e.target.name]: e.target.value,
+    };
+    setState(nextFormState);
+  };
+  const sendToServer = async () => {
+    const { name, phone, email, comments, banking, amount, payment, agent } =
+      state;
+    const { data } = await postDetailsDiaspora({
+      name,
+      phone,
+      email,
+      comments,
+      banking,
+      amount,
+      payment,
+      agent_id: agent,
+    });
+    if (data[0].affectedRows) {
+      setDone(true);
+    }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    sendToServer();
+  };
   return (
-    <div className="card p-4 shadow-lg p-3 mb-5 bg-white rounded">
-      <p class="text-center pt-3">Fill in the form below</p>
-      <hr />
-      <div className="mb-3">
-        <label for="fullname" className="form-label">
-          Fullname
-        </label>
-        <input
-          required
-          type="name"
-          className="form-control"
-          id="fullname"
-          placeholder="e.g Joe Doe"
-        />
-      </div>
+    <div className="card p-4 shadow-lg p-3 mb-5 bg-white border-top border-5 border-light rounded">
+      {!done ? (
+        <form onSubmit={handleSubmit}>
+          <h6 class="text-center pt-3">Fill in the form below</h6>
+          <hr />
+          <div className="mb-3">
+            <label for="fullname" className="form-label">
+              Fullname
+            </label>
+            <input
+              required
+              type="name"
+              onChange={onUpdateField}
+              value={state.name}
+              name="name"
+              className="form-control"
+              id="fullname"
+              placeholder="e.g Joe Doe"
+            />
+          </div>
 
-      <div className="mb-3">
-        <label for="tel" className="form-label">
-          Phone number
-        </label>
-        <input
-          required
-          type="tel"
-          className="form-control"
-          id="tel"
-          placeholder="e.g +1(919) 543..."
-        />
-      </div>
+          <div className="mb-3">
+            <label for="email" className="form-label">
+              email
+            </label>
+            <input
+              required
+              type="email"
+              name="email"
+              value={state.email}
+              onChange={onUpdateField}
+              className="form-control"
+              id="email"
+              placeholder="e.g myemail@email.com"
+            />
+          </div>
+          <div className="d-inline" required onChange={onUpdateField}>
+            <input
+              className="form-check-input pe-3"
+              type="checkbox"
+              name="banking"
+              value="western"
+              checked={state.banking === "western" ? true : false}
+              id="western"
+            />
+            <label className="form-check-label pe-3 ps-3" for="western">
+              Western Union
+            </label>
 
-      <div className="mb-3">
-        <label for="Email" className="form-label">
-          Email address
-        </label>
-        <input
-          required
-          type="name"
-          className="form-control"
-          id="Email"
-          placeholder="e.g email@gmail.com"
-        />
-      </div>
+            <input
+              className="form-check-input pe-3"
+              type="checkbox"
+              name="banking"
+              value="paypal"
+              id="paypal"
+              checked={state.banking === "paypal" ? true : false}
+            />
+            <label className="form-check-label ps-3" for="paypal">
+              paypal
+            </label>
+          </div>
+          <div className="mb-3">
+            <label for="phone" className="form-label">
+              Contact number
+            </label>
+            <input
+              required
+              type="phone"
+              value={state.phone}
+              name="phone"
+              onChange={onUpdateField}
+              className="form-control"
+              id="phone"
+              placeholder="e.g 0713271345"
+            />
+          </div>
+          <div className="mb-3">
+            <label for="amount" className="form-label">
+              Amount to contribute
+            </label>
+            <input
+              required
+              type="name"
+              name="amount"
+              onChange={onUpdateField}
+              className="form-control"
+              id="amount"
+              value={state.amount}
+              placeholder="30,000"
+            />
+          </div>
 
-      <div className="mb-3">
-        <label for="amount" className="form-label">
-          Amount to contribute in ksh
-        </label>
-        <input
-          required
-          type="name"
-          className="form-control"
-          id="amount"
-          placeholder="30,000"
-        />
-      </div>
+          <div className="d-inline" required onChange={onUpdateField}>
+            <input
+              className="form-check-input pe-3"
+              type="checkbox"
+              name="payment"
+              value="paid"
+              checked={state.payment === "paid" ? true : false}
+              id="paid"
+            />
+            <label className="form-check-label pe-3 ps-3" for="paid">
+              paid
+            </label>
 
-      <div className="d-inline">
-        <input
-          required
-          className="form-check-input pe-3"
-          type="checkbox"
-          value=""
-          id="flexCheckDefault"
-        />
-        <label className="form-check-label pe-3 ps-3" for="flexCheckDefault">
-          PayPal
-        </label>
-
-        <input
-          required
-          className="form-check-input pe-3"
-          type="checkbox"
-          value=""
-          id="flexCheckChecked"
-          checked
-        />
-        <label className="form-check-label ps-3" for="flexCheckChecked">
-          Western Unions
-        </label>
-      </div>
-
-      <select className="form-select mt-3">
-        <option value="Agent">Fundraising Agent</option>
-        <option value="grapefruit">Grapefruit</option>
-        <option value="lime">Lime</option>
-        <option selected value="coconut">
-          Coconut
-        </option>
-        <option value="mango">Mango</option>
-      </select>
-
-      <div className="mb-3">
-        <label for="Cooemts" className="form-label">
-          Comments if any.....
-        </label>
-        <textarea className="form-control" id="Cooemts" rows="3"></textarea>
-      </div>
-
-      <button type="button" class="btn btn-primary">
-        Submit
-      </button>
+            <input
+              className="form-check-input pe-3"
+              type="checkbox"
+              name="payment"
+              value="pledged"
+              id="pledged"
+              checked={state.payment === "pledged" ? true : false}
+            />
+            <label className="form-check-label ps-3" for="pledged">
+              pledged
+            </label>
+          </div>
+          <select
+            className="form-select mt-3"
+            name="agent"
+            id="agent"
+            value={state.agent}
+            onChange={onUpdateField}
+          >
+            <option value={1}>Fundraising Agent (required)</option>
+            <option value={2}>Grapefruit</option>
+            <option value={3}>Lime</option>
+            <option value={4}>Coconut</option>
+            <option value={5}>Mango</option>
+          </select>
+          <div className="mb-3">
+            <label for="Cooemts" className="form-label">
+              Comments if any.....
+            </label>
+            <textarea
+              className="form-control"
+              id="Comments"
+              rows="3"
+              name="comments"
+              value={state.comments}
+              onChange={onUpdateField}
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      ) : (
+        <div className="d-flex  align-items-center mt-5">
+          <h1 className="text-success">Thanks for submitting</h1>
+        </div>
+      )}
     </div>
   );
 }

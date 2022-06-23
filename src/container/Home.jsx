@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Home() {
   return (
-    <div>
-      <h1>under construction</h1>
+    <div classname="d-flex justify-content-center align-items-center">
+      <h1>Page not Found</h1>
     </div>
   );
 }

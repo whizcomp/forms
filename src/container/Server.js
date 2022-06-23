@@ -15,3 +15,6 @@ export function postDetailsDiaspora(data) {
       data
     })
 }
+export function getDetails() {
+  return axios.get(apiEndpoint)
+}

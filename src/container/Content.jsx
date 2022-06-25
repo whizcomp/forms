@@ -12,6 +12,7 @@ export default function Content() {
     amount: "",
     payment: "",
     agent: 0,
+    pledgedate: "0000-00-00 00:00:00",
   });
   const onUpdateField = (e) => {
     const nextFormState = {
@@ -21,8 +22,17 @@ export default function Content() {
     setState(nextFormState);
   };
   const sendToServer = async () => {
-    const { name, phone, email, comments, banking, amount, payment, agent } =
-      state;
+    const {
+      name,
+      phone,
+      email,
+      comments,
+      banking,
+      amount,
+      payment,
+      agent,
+      pledgedate,
+    } = state;
     const { data } = await postDetailsDiaspora({
       name,
       phone,
@@ -32,8 +42,8 @@ export default function Content() {
       amount,
       payment,
       agent_id: agent,
+      pledgedate,
     });
-    console.log(data[0]);
     if (data[0].affectedRows > 0) {
       navigate("/thanks");
     }
@@ -108,7 +118,6 @@ export default function Content() {
             Contact number
           </label>
           <input
-            required
             type="phone"
             value={state.phone}
             name="phone"
@@ -158,6 +167,25 @@ export default function Content() {
           <label className="form-check-label ps-3" for="pledged">
             pledged
           </label>
+        </div>
+        <div>
+          {state.payment === "pledged" && (
+            <>
+              <br />
+              <label className="form-label ps-3" for="pledgedate">
+                <b>Pledge Date</b>
+              </label>
+              <br />
+              <input
+                className="form-input pe-3"
+                type="date"
+                onChange={onUpdateField}
+                name="pledgedate"
+                value={state.pledgedate}
+                id="pledgedate"
+              />
+            </>
+          )}
         </div>
         <select
           className="form-select mt-3"

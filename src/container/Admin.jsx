@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import ListTable from "./ListTable";
-import { getDetails } from "./Server";
+import { getDetails, getDiaspora } from "./Server";
+import TableDiaspora from "./TableDiaspora";
 export default function Admin() {
   useEffect(() => {
     getList();
   }, []);
   const getList = async () => {
     const { data } = await getDetails();
-
+    const { data: dia } = await getDiaspora();
     setList(data);
+    setDiaspora(dia);
   };
   const [list, setList] = useState([]);
+  const [diaspora, setDiaspora] = useState([]);
+  const [diasporaState, setdiasporaState] = useState(true);
   const [state, setState] = useState({
     title: "Title here",
     desc: "Description here",
@@ -72,7 +76,26 @@ export default function Admin() {
             </div>
           </div>
           <div class="col-lg-8 col-md-4 col-sm-12">
-            <ListTable list={list} />
+            {diasporaState ? (
+              <button
+                className="btn btn-primary"
+                onClick={() => setdiasporaState(false)}
+              >
+                view Local
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary"
+                onClick={() => setdiasporaState(true)}
+              >
+                View Diaspora
+              </button>
+            )}
+            {!diasporaState ? (
+              <ListTable list={list} />
+            ) : (
+              <TableDiaspora list={diaspora} />
+            )}
           </div>
         </div>
       </div>

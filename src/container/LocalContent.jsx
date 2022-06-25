@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { postDetails } from "./Server";
 import { useNavigate } from "react-router-dom";
+import createDate from "./DateReader";
 export default function Content() {
   let navigate = useNavigate();
   const [state, setState] = useState({
@@ -10,7 +11,7 @@ export default function Content() {
     mpesa: "",
     amount: "",
     payment: "",
-    pledgedate: "",
+    pledgedate: "0000-00-00 00:00:00",
     agent: 0,
   });
   const onUpdateField = (e) => {

@@ -26,6 +26,9 @@ export function getDiaspora() {
 export function getUser(place, id) {
   return axios.get(`${apiEndpoint}/${place}/${id}`)
 }
+export function getAdmin() {
+  return axios.get(`${apiEndpoint}/info`)
+}
 export function putSettings(data) {
   return axios
     .put(`${apiEndpoint}/info`, {

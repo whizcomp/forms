@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { putSettings } from "./Server";
+import { putSettings, get } from "./Server";
 
 export default function Settings() {
   const [state, setState] = useState({ title: "", desc: "" });

@@ -10,6 +10,7 @@ export function postDetails(data) {
       data
     })
 }
+
 export function postDetailsDiaspora(data) {
   return axios
     .post(apiEndpointDiaspora, {
@@ -21,4 +22,13 @@ export function getDetails() {
 }
 export function getDiaspora() {
   return axios.get(apiDiaspora);
+}
+export function getUser(place, id) {
+  return axios.get(`${apiEndpoint}/${place}/${id}`)
+}
+export function putSettings(data) {
+  return axios
+    .put(`${apiEndpoint}/info`, {
+      data
+    })
 }

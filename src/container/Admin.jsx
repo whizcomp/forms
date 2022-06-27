@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import ListTable from "./ListTable";
 import { getDetails, getDiaspora } from "./Server";
 import TableDiaspora from "./TableDiaspora";
+
 export default function Admin() {
   useEffect(() => {
     getList();
@@ -41,19 +43,24 @@ export default function Admin() {
           <div>
             {diasporaState ? (
               <button
-                className="btn btn-primary"
+                className="btn btn-primary ms-auto"
                 onClick={() => setdiasporaState(false)}
               >
                 view Local
               </button>
             ) : (
               <button
-                className="btn btn-primary"
+                className="btn btn-primary ms-auto"
                 onClick={() => setdiasporaState(true)}
               >
                 View Diaspora
               </button>
             )}
+            <Link to="/settings">
+              <h1 className="d-inline float-end">
+                <i className="bi bi-gear" width="100" height="100"></i>
+              </h1>
+            </Link>
             {!diasporaState ? (
               <ListTable list={list} />
             ) : (

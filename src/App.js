@@ -8,6 +8,7 @@ import Diaspora from "./container/Diaspora";
 import Complete from "./container/Complete";
 import Admin from "./container/Admin";
 import ViewSender from "./container/ViewSender";
+import Settings from "./container/Settings";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/local" element={<Forms />}></Route>
         <Route path="/thanks" element={<Complete />}></Route>
         <Route path="/admin" element={<Admin />}></Route>
+        <Route path="/settings" element={<Settings />}></Route>
         <Route path="/" element={<Home />}></Route>
       </Routes>
     </BrowserRouter>

@@ -7,11 +7,13 @@ import Home from "./container/Home";
 import Diaspora from "./container/Diaspora";
 import Complete from "./container/Complete";
 import Admin from "./container/Admin";
+import ViewSender from "./container/ViewSender";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/admin/:place/:id" element={<ViewSender />}></Route>
         <Route path="/diaspora" element={<Diaspora />}></Route>
         <Route path="/local" element={<Forms />}></Route>
         <Route path="/thanks" element={<Complete />}></Route>

@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import createDate from "./DateReader";
+
 export default function ListTable({ list }) {
   console.log(list);
 
@@ -16,6 +18,7 @@ export default function ListTable({ list }) {
             <th scope="col">payment</th>
             <th scope="col">Agents</th>
             <th scope="col">Pledged Date</th>
+            <th scope="col">More</th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +32,9 @@ export default function ListTable({ list }) {
               <td>{list.payment}</td>
               <td>{list.Agent_Name}</td>
               <td>{list.pledgedate ? createDate(list.pledgedate) : "paid"}</td>
+              <td>
+                <Link to={`local/${list.id}`}>view more</Link>
+              </td>
             </tr>
           ))}
         </tbody>

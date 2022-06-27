@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import createDate from "./DateReader";
 export default function TableDiaspora({ list }) {
   console.log(list);
@@ -28,6 +30,9 @@ export default function TableDiaspora({ list }) {
               <td>{list.banking}</td>
               <td>{list.Agent_Name}</td>
               <td>{list.pledgedate ? createDate(list.pledgedate) : "paid"}</td>
+              <td>
+                <Link to={`diaspora/${list.id}`}>view more</Link>
+              </td>
             </tr>
           ))}
         </tbody>
